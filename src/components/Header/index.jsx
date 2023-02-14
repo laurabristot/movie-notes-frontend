@@ -3,10 +3,15 @@ import { ButtonText } from "../ButtonText";
 import { Container, Profile } from "./styles";
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../hooks/auth'
+import { api } from "../../services/api";
+import avatarPlaceholder from '../../assets/avatar_placeholder.svg'
 
 export function Header(){
-  const {signOut} = useAuth()
+  const {signOut, user} = useAuth()
   const navigate = useNavigate()
+
+  const avatarUrl = user.avatar ? `${api.defaults.baseURL}/files/${user.avatar}` : avatarPlaceholder
+  
 
   function handleSignOut(){
     navigate("/")
@@ -22,7 +27,7 @@ export function Header(){
 
     <Profile>
       <div>
-        <strong>Laura Bristot</strong>
+        <strong>{user.name}</strong>
         <ButtonText
         title="sair"
         onClick={handleSignOut}
@@ -30,7 +35,7 @@ export function Header(){
       </div>
 
       <Link to={"/profile"}>
-      <img src="https://github.com/laurabristot.png" alt="" />
+      <img src={avatarUrl} alt={`foto do usuário ${user.name}`} />
       </Link>
     </Profile>
 

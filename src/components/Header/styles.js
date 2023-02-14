@@ -55,6 +55,7 @@ export const Profile = styled.div`
     height: 64px;
     border: 1px solid ${({ theme }) => theme.COLORS.GRAY_400};
     border-radius: 50%;
+    object-fit: cover;
   }
 
 `
