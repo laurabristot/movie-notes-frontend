@@ -15,7 +15,7 @@ export function NewMovie(){
       <Header/>
 
       <Content>
-      <Link to={"/"}>
+        <Link to={"/"}>
           <BsArrowLeft/>
           Voltar
         </Link>
