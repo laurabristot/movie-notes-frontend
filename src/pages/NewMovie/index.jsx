@@ -2,6 +2,8 @@ import { Container, Content, Section, Buttons } from "./styles";
 import { BsArrowLeft } from "react-icons/bs";
 import { Link } from "react-router-dom";
 
+import { useState } from "react";
+import { api } from "../../services/api";
 
 import { Header } from "../../components/Header"
 import { Input } from "../../components/Input"
@@ -10,6 +12,33 @@ import { NoteItem } from "../../components/NoteItem"
 import { Button } from "../../components/Button"
 
 export function NewMovie(){
+  const [title, setTitle] = useState('');
+  const [rating, setRating] = useState('')
+  const [description, setDescription] = useState('');
+
+  const [tags, setTags] = useState([])
+  const [newTag, setNewTag] = useState("")
+
+  function handleAddTag(){
+    setTags(prevState => [...prevState, newTag])
+    setNewTag("")
+  }
+
+  function handleRemoveTag(deleted){
+    setTags(prevState => prevState.filter(tag => tag !== deleted))
+  }
+
+
+  async function createNewNote(){
+    await api.post('/movieNotes', {
+      title,
+      description,
+      rating: Number(rating),
+      tags
+    })
+  }
+
+
   return(
     <Container>
       <Header/>
@@ -26,14 +55,17 @@ export function NewMovie(){
           <div className="input">
           <Input
             placeholder="Título"
+            onChange={e=> setTitle(e.target.value)}
           />
           <Input
             placeholder="Sua Nota (de 0 a 5)"
+            onChange={e=> setRating(e.target.value)}
           />
           </div>
 
           <TextArea
           placeholder="Descrição"
+          onChange={e=> setDescription(e.target.value)}
           />
         
         <Section>
@@ -41,11 +73,21 @@ export function NewMovie(){
           
           <div className="tags">
          
-          <NoteItem
-            placeholder="Drama"/>
+         {
+            tags.map((tag , index)=>(
+              <NoteItem
+              key={index}
+              value={tag}
+              onClick={()=>handleRemoveTag(tag)}
+            />
+          ))
+         }
           <NoteItem
             placeholder="Novo Marcador"
-            isNew={true}/>
+            isNew
+            value={newTag}
+            onChange={e=>setNewTag(e.target.value)}
+            onClick={handleAddTag}/>
             
           </div>
 
@@ -53,9 +95,12 @@ export function NewMovie(){
 
         <Buttons>
            <Button 
-           title="Excluir Filme"/>
+           title="Excluir Filme"
+           />
            <Button 
-           title="Salvar Alterações"/>
+           title="Salvar Alterações"
+           onClick={createNewNote}
+           />
         </Buttons>
         
         </main>
