@@ -1,6 +1,6 @@
 import { Container, Content, Section, Buttons } from "./styles";
 import { BsArrowLeft } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { useState } from "react";
 import { api } from "../../services/api";
@@ -19,6 +19,8 @@ export function NewMovie(){
   const [tags, setTags] = useState([])
   const [newTag, setNewTag] = useState("")
 
+  const navigate = useNavigate()
+
   function handleAddTag(){
     setTags(prevState => [...prevState, newTag])
     setNewTag("")
@@ -30,12 +32,30 @@ export function NewMovie(){
 
 
   async function createNewNote(){
+    if(!title){
+      return alert('Digite o título do filme.')
+    }
+
+    if(!rating){
+      return alert('Dê uma nota para o filme.')
+    }
+    
+    if(tags.length == 0 ){
+      return alert('Adicione uma Tag')
+    }
+
+    if (newTag){
+      return alert('Você deixou uma tag no campo para adicionar, mas não clicou em adicionar. Clique em adicionar, ou deixe o campo vazio')
+    }
+
     await api.post('/movieNotes', {
       title,
       description,
       rating: Number(rating),
       tags
     })
+    
+    navigate(-1)
   }
 
 
