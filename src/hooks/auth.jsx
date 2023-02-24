@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { api } from "../services/api";
 
-export const AuthContext = createContext({})
+const AuthContext = createContext({})
 
 function AuthProvider({children}){
   const [data, setData] = useState({})
@@ -28,8 +28,8 @@ function AuthProvider({children}){
   }
 
   async function signOut(){
-    const token = localStorage.removeItem("@rocketmovies:token")
-    const user = localStorage.removeItem("@rocketmovies:user")
+    localStorage.removeItem("@rocketmovies:token")
+    localStorage.removeItem("@rocketmovies:user")
     setData({})
   }
 

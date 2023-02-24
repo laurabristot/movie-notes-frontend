@@ -42,6 +42,7 @@ export function Profile(){
     const userUpdated = Object.assign(user, updated)
 
     await updateProfile({user: userUpdated, avatarFile})
+    console.log(user)
   }
 
   function handleAvatarChange(event){
@@ -51,9 +52,6 @@ export function Profile(){
     const imagePreview = URL.createObjectURL(file)
     setAvatar(imagePreview)
   }
-
-
-
 
   return (
     <Container>
@@ -71,7 +69,7 @@ export function Profile(){
 
         <Avatar>
         <img 
-          src={avatarUrl} 
+          src={avatar} 
           alt={`foto do usuário ${name}`} 
         />
         <label htmlFor="avatar">
