@@ -8,6 +8,7 @@ export const Container = styled.div`
   flex-direction: column;
   justify-content: space-between;
   gap: 15px;
+  cursor: pointer;
 
   margin: 0 auto 24px;
 

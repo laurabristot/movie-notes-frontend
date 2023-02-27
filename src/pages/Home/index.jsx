@@ -11,7 +11,10 @@ import { api } from '../../services/api'
 
 export function Home(){
    const [movies, setMovies] = useState([])
-   const [search, setSearch] = useState()
+   const [search, setSearch] = useState("")
+
+   const [tags, setTags] = useState([])
+   const [tagsSelected, setTagsSelected] = useState([])
 
    const navigate = useNavigate()
 
@@ -19,17 +22,36 @@ export function Home(){
     navigate(`/details/${id}`)
    }
 
+   function handleTagSelected(tagName){
+    if(!tagName){
+      return setTagsSelected([])
+    }
+    const alreadySelected = tagsSelected.includes(tagName)
+    if(alreadySelected){
+      const filteredTags = tagsSelected.filter(tag => tag !== tagName)
+      setTagsSelected(filteredTags)
+    } else {
+      setTagsSelected(prevState => [...prevState, tagName])
+    }
+  }
+
+  function handleSearch(e){
+    setSearch(e.target.value)
+  }
+
    useEffect(()=>{
-    async function fetchMovies(){
-      const response = await api.get(`/movieNotes`)
+    async function fetchNotes(){
+      const response = await api.get(`/movieNotes?title=${search}&tags=${tagsSelected}`)
       setMovies(response.data)
     }
-    fetchMovies()
-   }, [])
+    fetchNotes()
+  }, [tagsSelected, search])
    
   return (
     <Container>
-      <Header/>
+      <Header
+      onChange={handleSearch}
+      />
       <Content>
         <main>
           <header>

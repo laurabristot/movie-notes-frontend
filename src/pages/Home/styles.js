@@ -14,7 +14,6 @@ export const Container = styled.div`
 export const Content = styled.div`
   grid-area: content;
   margin: 0 auto 60px;
-  cursor: pointer;
 
   > main {
     width: 1120px;
