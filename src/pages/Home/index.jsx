@@ -22,19 +22,6 @@ export function Home(){
     navigate(`/details/${id}`)
    }
 
-   function handleTagSelected(tagName){
-    if(!tagName){
-      return setTagsSelected([])
-    }
-    const alreadySelected = tagsSelected.includes(tagName)
-    if(alreadySelected){
-      const filteredTags = tagsSelected.filter(tag => tag !== tagName)
-      setTagsSelected(filteredTags)
-    } else {
-      setTagsSelected(prevState => [...prevState, tagName])
-    }
-  }
-
   function handleSearch(e){
     setSearch(e.target.value)
   }

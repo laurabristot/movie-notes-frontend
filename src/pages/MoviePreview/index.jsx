@@ -1,8 +1,9 @@
 import { Header } from "../../components/Header";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { BsArrowLeft, BsClock } from "react-icons/bs"
+import { RiEditFill } from "react-icons/ri"
 
-import { Container, Content } from "./styles";
+import { Container, Content, LinksTo } from "./styles";
 import { Tags } from "../../components/Tags";
 import ReactStarsRating from 'react-awesome-stars-rating';
 import { useState } from "react";
@@ -10,6 +11,7 @@ import { useState } from "react";
 import { api } from "../../services/api";
 import { useEffect } from "react";
 import { useAuth } from "../../hooks/auth";
+import avatarPlaceholder from '../../assets/avatar_placeholder.svg'
 
 export function MoviePreview(){
   const {user} = useAuth()
@@ -17,13 +19,10 @@ export function MoviePreview(){
   const params = useParams()
   const navigate = useNavigate()
 
+
   
   const avatarUrl = user.avatar ? `${api.defaults.baseURL}/files/${user.avatar}` : avatarPlaceholder 
-  
-  function handleBack(){
-    navigate(-1)
-  }
-  
+   
   useEffect(()=>{
     async function fetchMovie(){
       const response = await api.get(`/movieNotes/${params.id}`)
@@ -37,10 +36,17 @@ export function MoviePreview(){
       <Header/>
       <Content>
 
+        <LinksTo>
         <Link to={"/"}>
           <BsArrowLeft/>
           Voltar
         </Link>
+
+        <Link to={`/editmovie/${params.id}`}>
+          <RiEditFill/> 
+          Editar
+        </Link>
+        </LinksTo>
 
           {
             data && 

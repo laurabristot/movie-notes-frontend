@@ -26,7 +26,7 @@ export const Content = styled.div`
   }
 
   > main {
-    height:75vh;
+    max-height:75vh;
     padding-right: 8px;
     overflow-y: scroll;
     &::-webkit-scrollbar {
@@ -49,36 +49,58 @@ export const Content = styled.div`
       gap: 19px;
     }
 
-    .createdBy {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-      font-size: 16px;
-      line-height: 19px;
-    }
-
     svg {
       color: ${({ theme }) => theme.COLORS.PINK};
     }
 
-    img {
-      height: 16px;
-      width: 16px;
-      border-radius: 50%;
-    }
-
-    .tags {
-      margin: 40px 0;
-    }
 
     p {
       text-align: justify;
       font-size: 16px;
       line-height: 21px;
     }
+
+    .input{
+      display: flex;
+      gap: 40px;
+      margin-bottom: 20px;
+    }
   }
 `
-export const LinksTo = styled.div`
+
+export const Section = styled.section`
+  >h2{
+    margin-top: 20px;
+    margin-bottom: 24px;
+    font-size: 20px;
+    line-height: 26px;
+    color: ${({theme})=> theme.COLORS.GRAY_200};
+    font-weight: 400;
+  }
+
+  .tags {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    background-color: ${({theme})=> theme.COLORS.BACKGROUND_900};
+    align-items: center;
+    padding: 16px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    
+  }
+
+`
+
+export const Buttons = styled.div`
   display: flex;
-  justify-content: space-between;
+  gap: 40px;
+  >button{
+    height: 56px;
+  }
+
+  >button:first-child{
+    background-color: ${({theme})=> theme.COLORS.BACKGROUND_900};
+    color: ${({theme})=> theme.COLORS.PINK};
+  }
 `
